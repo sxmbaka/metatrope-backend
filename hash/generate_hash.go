@@ -1,28 +1,31 @@
 package imghash
 
 import (
-	"image/jpeg"
+	"fmt"
+	"image"
+	_ "image/jpeg"
+	_ "image/png"
 	"os"
 
 	"github.com/corona10/goimagehash"
 )
 
-func GenerateHash(path string) string {
+func GenerateHash(path string) (string, error) {
 	file, err := os.Open(path)
 	if err != nil {
-		panic(err)
+		return "", fmt.Errorf("failed to open file: %v", err)
 	}
 	defer file.Close()
 
-	img, err := jpeg.Decode(file)
+	img, _, err := image.Decode(file)
 	if err != nil {
-		panic(err)
+		return "", fmt.Errorf("failed to decode image: %v", err)
 	}
 
 	hash, err := goimagehash.AverageHash(img)
 	if err != nil {
-		panic(err)
+		return "", fmt.Errorf("failed to generate hash: %v", err)
 	}
 
-	return hash.ToString()
+	return hash.ToString(), nil
 }

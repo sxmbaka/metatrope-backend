@@ -10,8 +10,8 @@ import (
 func main() {
 	start := time.Now()
 	// fmt.Println(imghash.GenerateHash())
-	rootDir := "/mnt/c/gdata/takeout-20240517T130451Z-002/Takeout"
-	// rootDir := "sample-data"
+	// rootDir := "C:/gdata/takeout-20240517T130451Z-001/Takeout"
+	rootDir := "sample-data"
 
 	imageFiles, count, err := file_discovery.FindImageFiles(rootDir)
 	if err != nil {
